@@ -18,7 +18,11 @@ run_input = {
 }
 
 run = apify_client.actor("QbKEOrw6PkLcy4Xms").call(run_input = run_input)
-text = '\n\n'.join([item['text'] for item in apify_client.dataset(run["defaultDatasetId"]).iterate_items()])
+
+text = '\n\n'.join([
+    item['text'] 
+    for item in apify_client.dataset(run["defaultDatasetId"]).iterate_items()
+])
 
 audio_segments = []
 sentences = text.split('.')
