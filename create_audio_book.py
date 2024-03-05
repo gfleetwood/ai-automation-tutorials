@@ -5,10 +5,15 @@ from os import system, environ
 from pydub import AudioSegment
 from io import BytesIO
 from apify_client import ApifyClient
+from pdfminer.high_level import extract_text
 
 apify_client = ApifyClient(environ['APIFY_API'])
 openai_client = OpenAI(api_key = environ['OPENAI_API_KEY'])
 PDF_URL = "https://www.maths.ed.ac.uk/~v1ranick/papers/wigner.pdf"
+
+'''
+# Use this code if the pdf is a url
+'''
 
 run_input = {
     "urls": [PDF_URL],
@@ -24,8 +29,15 @@ text = '\n\n'.join([
     for item in apify_client.dataset(run["defaultDatasetId"]).iterate_items()
 ])
 
-audio_segments = []
+'''
+# Use this code if it's local on your machine
+
+pdf_path = ''
+text = extract_text(pdf_path)
+'''
+
 sentences = text.split('.')
+audio_segments = []
 
 for i, sentence in enumerate(sentences):
     if len(sentence) < 1: continue
