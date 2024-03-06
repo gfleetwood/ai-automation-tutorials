@@ -41,7 +41,7 @@ audio_segments = []
 
 for i, sentence in enumerate(sentences):
     if len(sentence) < 1: continue
-    response = client.audio.speech.create(model = "tts-1", voice = "alloy", input = sentence)
+    response = openai_client.audio.speech.create(model = "tts-1", voice = "alloy", input = sentence)
     audio_data = BytesIO(response.content)
     audio_segment = AudioSegment.from_file(audio_data, format = "mp3")
     audio_segments.append(audio_segment)
